@@ -53,6 +53,15 @@
             muisx = mouse.clientX;
             muisy = mouse.clientY;
         }
+        var src = document.getElementById("ctx");
+        var clientX, clientY;
+
+        src.addEventListener('touchstart', function (e) {
+            // Cache the client X/Y coordinates
+            muisx = e.touches[0].clientX;
+            muisy = e.touches[0].clientY;
+        }, false);
+
 
         function drawbal(x, y, s, color) {
 
