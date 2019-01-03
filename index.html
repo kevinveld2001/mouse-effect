@@ -54,12 +54,24 @@
             muisy = mouse.clientY;
         }
         var src = document.getElementById("ctx");
-        var clientX, clientY;
+        
 
         src.addEventListener('touchstart', function (e) {
             // Cache the client X/Y coordinates
             muisx = e.touches[0].clientX;
             muisy = e.touches[0].clientY;
+        }, false);
+
+        src.addEventListener('touchend', function (e) {
+            
+
+            // Compute the change in X and Y coordinates. 
+            // The first touch point in the changedTouches
+            // list is the touch point that was just removed from the surface.
+            muisx = -1000
+            muisy = -1000
+
+            // Process the data ... 
         }, false);
 
 
