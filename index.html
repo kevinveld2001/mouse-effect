@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mouse effect</title>
+</head>
+
+<body>
+    <style>
+        #ctx {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+
+    <!-- canvas ctx -->
+    <canvas id="ctx"></canvas>
+
+    <script>
+        //main
+        var ctx = document.getElementById("ctx").getContext("2d");
+        ctx.font = '30px Arial'
+        var screenw
+        var screenh
+
+        //end main
+
+        // clear sreen
+
+        setInterval(clearscreen, 10)
+
+        function clearscreen() {
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+            var screenw = window.innerWidth
+            var screenh = window.innerHeight
+            ctx.clearRect(0, 0, screenw, screenh);
+            ctx.fillStyle = "#000000"
+            ctx.fillRect(0, 0, screenw, screenh)
+
+            move()
+
+
+        }
+        //end clear sreen
+        var muisx
+        var muisy
+        document.onmousemove = function (mouse) {
+            muisx = mouse.clientX;
+            muisy = mouse.clientY;
+        }
+
+        function drawbal(x, y, s, color) {
+
+            ctx.fillStyle = color
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.arc(x, y, s, 0, Math.PI * 2, true);
+            ctx.fill();
+            ctx.closePath();
+
+        }
+
+        var list = []
+        var colorlist = ["#594f4f", "#547980", "#45ada8", "#9de0ad", "#e5fcc2"]
+        randombal(700)
+
+        function randombal(number) {
+            for (a = 0; a < number; a++) {
+                var x = Math.random() * window.innerWidth
+                var y = Math.random() * window.innerHeight
+                var s = 5
+                var mx = (Math.random() * 2) - 1
+                var my = (Math.random() * 2) - 1
+                var color = 'white'
+                var bal = {
+                    x: x,
+                    y: y,
+                    s: s,
+                    mx: mx,
+                    my: my,
+                    color: colorlist[Math.round(Math.random() * 4)]
+                }
+                list.push(bal)
+            }
+
+        }
+
+        function move() {
+            for (a = 0; a < list.length; a++) {
+                var xdis = Math.pow(list[a].x - muisx, 2)
+                var ydis = Math.pow(list[a].y - muisy, 2)
+                var sdis = Math.sqrt(xdis + ydis)
+                if (sdis < 130) {
+                    var bals = 50
+                } else {
+                    var bals = 3
+                }
+                drawbal(list[a].x, list[a].y, bals, list[a].color)
+                if (list[a].x < 0) {
+                    list[a].mx = -list[a].mx
+                }
+                if (list[a].x > window.innerWidth) {
+                    list[a].mx = -list[a].mx
+                }
+                if (list[a].y < 0) {
+                    list[a].my = -list[a].my
+                }
+                if (list[a].y > window.innerHeight) {
+                    list[a].my = -list[a].my
+                }
+                list[a].x += list[a].mx
+                list[a].y += list[a].my
+
+
+
+
+            }
+        }
+    </script>
+</body>
+
+</html>
